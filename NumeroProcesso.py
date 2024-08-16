@@ -42,9 +42,3 @@ class NumeroProcesso:
     else:
       return None
     
-
-codigo = NumeroProcesso('0710802-55.2018.8.02.0001')
-codigo2 = NumeroProcesso('0070337-91.2008.8.06.0001')
-print(vars(codigo))
-print(vars(codigo2))
-#print(codigo.limpar_numero('0710802-55.2018.8.02.0001'))
