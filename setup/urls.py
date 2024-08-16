@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-from desafio_jus.controller.Consulta import consulta
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("consulta/", consulta)
+    path('', include('desafio.urls'))
 ]
