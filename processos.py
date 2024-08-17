@@ -12,7 +12,7 @@ class NumeroProcesso:
     if numero_processo:
       self._numero = numero_processo
       self._codigo_estado = self.obter_estado(numero_processo)
-      self._codigo_consulta = self.obter_numero_sem_codigo_regiao(numero_processo)
+      self._numero_consulta = self.obter_numero_sem_codigo_regiao(numero_processo)
 
   @property
   def numero(self):
@@ -24,7 +24,7 @@ class NumeroProcesso:
       
   @property
   def numero_consulta(self):
-    return self._codigo_consulta
+    return self._numero_consulta
 
   def limpar_numero(self, numero):
     return re.sub(r'\D', '', numero)
