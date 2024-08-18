@@ -66,6 +66,16 @@ class Crawler:
 
       result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
     return result_text
+  
+  def check_and_handle_intermediate_screen(self):
+    try:
+      #Verifica se há a tela intermediária de selecionar o processo
+      radio_input = WebDriverWait(self._driver, 5).until(
+      EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='radio']")))
+      radio_input.click()
+      radio_input.send_keys(Keys.RETURN)
+    except:
+        pass
 
   def init(self, peek=False):
     try:
@@ -83,6 +93,9 @@ class Crawler:
 
       # Submeter o formulário (ajuste o seletor conforme necessário)
       input_field.send_keys(Keys.RETURN)
+      
+      # Verificar e lidar com a tela intermediária, se houver
+      self.check_and_handle_intermediate_screen()
 
       # Esperar até que a página de resultados esteja carregada
       for element_name, by_str in self._fields_target.values():
@@ -109,4 +122,6 @@ class Crawler:
     finally:
       self._driver.quit()
 
-  
+
+
+      

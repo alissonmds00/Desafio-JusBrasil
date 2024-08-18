@@ -66,7 +66,7 @@ class app:
     return self.consultar_tjce()
 
 consulta1 = app('0070337-91.2008.8.06.0001')
-#consulta2 = app('0710802-55.2018.8.02.0001')
+consulta2 = app('0710802-55.2018.8.02.0001')
 
 print(consulta1.iniciar_consulta())
-#print(consulta2.iniciar_consulta())
+print(consulta2.iniciar_consulta())
