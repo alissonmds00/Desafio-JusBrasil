@@ -109,21 +109,4 @@ class Crawler:
     finally:
       self._driver.quit()
 
-
-# Exemplo de uso
-if __name__ == "__main__":
-  from processos import NumeroProcesso
-  crawler = Crawler('https://www2.tjal.jus.br/cpopg/open.do', 'numeroDigitoAnoUnificado', False)
-  numero_processo = NumeroProcesso('0710802-55.2018.8.02.0001')
-  crawler.set_process_number(numero_processo.numero_consulta)
-  crawler.set_fields_target([
-    ['assunto', 'assuntoProcesso', 'ID'],
-    ['juiz', 'juizProcesso', 'ID'],
-    ['classe', 'classeProcesso', 'ID'],
-    ['partes', 'tableTodasPartes', 'ID'],
-    ['Movimentacoes', 'containerMovimentacao', 'CLASS_NAME']
-    ])
-  values = crawler.init()
-  print(values)
-  print(values.get('partes'))
   
