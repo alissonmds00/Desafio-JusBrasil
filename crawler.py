@@ -1,24 +1,31 @@
 import re
+import logging
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 class Crawler:
   def __init__(self, url_to_crawl, input_name, logs=False, driver=None):
     """_doc_
     Args:
         url_to_crawl (_string_): url to collect data
-        input_name (_string_): field element's name to input the process number
+        input_name (_string_): field element's name to insert the process number
         logs (_bool_, optional): Logs = True, will show performance logs. Defaults to False.
         driver (_webdriver.[DRIVER_], optional): Browser will be used to crawl. Defaults to Chrome Driver.
     """
     if driver is None and logs == False:
-      options = webdriver.ChromeOptions()
+      options = ChromeOptions()
       options.add_argument("--log-level=3")  # Ocultar logs de desempenho
-      driver = webdriver.Chrome(options=options)
+      options.add_argument("--disable-logging")  # Desativar logs
+      service = ChromeService(log_path='NUL')  # Desativar logs de stacktrace
+      driver = webdriver.Chrome(options=options, service=service)
     if driver is None and logs == True:
       driver = webdriver.Chrome()
     self._driver = driver
@@ -60,7 +67,7 @@ class Crawler:
       result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
     return result_text
 
-  def init(self):
+  def init(self, peek=False):
     try:
       if (type(self._url_to_crawl) != str):
         raise ValueError("Uma única URL deve ser fornecida e no formato string.")
@@ -80,20 +87,27 @@ class Crawler:
       # Esperar até que a página de resultados esteja carregada
       for element_name, by_str in self._fields_target.values():
         by = getattr(By, by_str)
-        #print(f"Waiting for element: {element_name} by {by_str}")
-        wait.until(EC.presence_of_element_located((by, element_name)))
-       # print(f"Element {element_name} loaded.")
+        try:
+          if peek:
+            logger.debug(f"Waiting for element: {element_name} by {by_str}")
+          WebDriverWait(self._driver, 2).until(EC.presence_of_element_located((by, element_name)))
+          if peek:
+            logger.debug(f"Element {element_name} loaded.")
+        except Exception as e:
+          logger.error(f"Element {element_name} not found: {e}")
+          continue
+      if peek:
+        logger.debug("Collecting desired values...")
+        
       # Coletar os valores desejados
-      #print("Collecting desired values...")
       values = self.get_values_by_selector()
-      #print("Values collected:", values)
+      if peek:
+        logger.debug("Values collected:", values)
       return values
     except Exception as e:
-      print(f"An error occurred: {e}")
+      logger.debug(f"An error occurred: {e}")
     finally:
       self._driver.quit()
-    
-
 
 
 # Exemplo de uso
