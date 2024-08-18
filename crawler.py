@@ -70,7 +70,7 @@ class Crawler:
   def check_and_handle_intermediate_screen(self):
     try:
       #Verifica se há a tela intermediária de selecionar o processo
-      radio_input = WebDriverWait(self._driver, 5).until(
+      radio_input = WebDriverWait(self._driver, 2).until(
       EC.presence_of_element_located((By.CSS_SELECTOR, "input[type='radio']")))
       radio_input.click()
       radio_input.send_keys(Keys.RETURN)
