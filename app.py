@@ -51,6 +51,8 @@ class app:
       crawler.set_fields_target(elementos[tribunal])
       crawler.set_process_number(self._numero_processo)
       resultado = crawler.init()
+      if not resultado:
+        return None if not self._respostas else self._respostas
       self._respostas.append(resultado)
     return self._respostas
 

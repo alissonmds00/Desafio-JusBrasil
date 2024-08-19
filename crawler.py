@@ -64,7 +64,8 @@ class Crawler:
       else:
         elements = soup.find_all(element_name)
 
-      result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
+      if elements:
+        result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
     return result_text
   
   def check_and_handle_intermediate_screen(self):
