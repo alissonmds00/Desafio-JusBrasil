@@ -1,7 +1,7 @@
 from desafio.utils.processos import NumeroProcesso
 from crawler import Crawler
 
-class app:
+class App:
   def __init__(self, numero_processo):
     self._urls = {
       'tjal': [
@@ -66,9 +66,3 @@ class app:
     if self._uf_processo == 'tjal':
       return self.consultar_tjal()
     return self.consultar_tjce()
-
-consulta1 = app('0070337-91.2008.8.06.0001')
-consulta2 = app('0710802-55.2018.8.02.0001')
-
-print(consulta1.iniciar_consulta())
-print(consulta2.iniciar_consulta())

@@ -1,7 +1,6 @@
 from django.urls import path
-from desafio.views import consulta, index
+from desafio.views.consulta import ConsultaView
 
 urlpatterns = [
-  path('consulta', consulta, name="consulta"),
-  path('', index)
+    path('processos/<str:numero_processo>', ConsultaView.as_view(), name="consulta"),
 ]
