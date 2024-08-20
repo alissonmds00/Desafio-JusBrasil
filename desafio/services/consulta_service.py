@@ -1,6 +1,7 @@
 from desafio.services.app import App
 from desafio.models.processo import Processo
 from desafio.utils.processos import NumeroProcesso
+from desafio.utils.tratamento_dados import TratamentoDados as td
 from django.db import transaction
 
 class ConsultaService:
@@ -27,11 +28,11 @@ class ConsultaService:
             Processo.objects.create(
                 numero_do_processo=numero_processo_formatado,
                 grau=grau,
-                classe=dado.get('classe', ''),
-                area=dado.get('area', ''),
-                assunto=dado.get('assunto', ''),
+                classe=td.remover_aspas(dado.get('classe', '')),
+                area=td.remover_aspas(dado.get('area', '')),
+                assunto=td.remover_aspas(dado.get('assunto', '')),
                 data_de_distribuicao=dado.get('data_de_distribuicao', '1970-01-01'),
-                juiz=dado.get('juiz', 'Desconhecido'),
+                juiz=td.remover_aspas(dado.get('juiz', 'Desconhecido')),
                 valor_da_acao=float(dado.get('valor_da_acao', 0))
             )
         except Exception as e:
