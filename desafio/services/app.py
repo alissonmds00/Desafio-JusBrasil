@@ -1,5 +1,5 @@
 from desafio.utils.processos import NumeroProcesso
-from crawler import Crawler
+from desafio.utils.crawler import Crawler
 
 class App:
   def __init__(self, numero_processo):

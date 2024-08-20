@@ -22,9 +22,14 @@ class Crawler:
     """
     if driver is None and logs == False:
       options = ChromeOptions()
-      options.add_argument("--log-level=3")  # Ocultar logs de desempenho
-      options.add_argument("--disable-logging")  # Desativar logs
-      service = ChromeService(log_path='NUL')  # Desativar logs de stacktrace
+      options.add_argument("--disable-gpu")  # Disable GPU
+      options.add_argument("--log-level=3") # Ocultar logs de desempenho
+      options.add_argument("--disable-logging")# Desabilitar loggings
+      options.add_argument("--disable-images")  # Disable images
+      options.add_argument("--disable-css")  # Disable CSS# Desativar logs
+      service = ChromeService(log_path='NUL')
+    if driver is None and logs == True:
+    #Desativar logs de stacktrace
       driver = webdriver.Chrome(options=options, service=service)
     if driver is None and logs == True:
       driver = webdriver.Chrome()
@@ -86,7 +91,7 @@ class Crawler:
       self._driver.get(self._url_to_crawl)
 
       # Esperar até que o campo de entrada esteja presente
-      wait = WebDriverWait(self._driver, 100)
+      wait = WebDriverWait(self._driver, 1)
       input_field = wait.until(EC.presence_of_element_located((By.NAME, self._input_name)))
 
       # Digitar o código no campo de entrada

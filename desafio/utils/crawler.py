@@ -20,24 +20,23 @@ class Crawler:
         logs (_bool_, optional): Logs = True, will show performance logs. Defaults to False.
         driver (_webdriver.[DRIVER_], optional): Browser will be used to crawl. Defaults to Chrome Driver.
     """
-    if driver is None and logs == False:
-      options = ChromeOptions()
-      options.add_argument("--disable-gpu")  # Disable GPU
-      options.add_argument("--log-level=3") # Ocultar logs de desempenho
-      options.add_argument("--disable-logging")# Desabilitar loggings
-      options.add_argument("--disable-images")  # Disable images
-      options.add_argument("--disable-css")  # Disable CSS# Desativar logs
-      service = ChromeService(log_path='NUL')
-    if driver is None and logs == True:
-    #Desativar logs de stacktrace
-      driver = webdriver.Chrome(options=options, service=service)
-    if driver is None and logs == True:
-      driver = webdriver.Chrome()
-    self._driver = driver
-    self._url_to_crawl = url_to_crawl
-    self._input_name = input_name
-    self._process_number = None
-    self._fields_target = {}
+    options = ChromeOptions()
+    if driver is None:
+      if logs:
+        driver = webdriver.Chrome(options=options)
+      else:
+          options.add_argument("--disable-gpu")  # Disable GPU
+          options.add_argument("--log-level=3")  # Ocultar logs de desempenho
+          options.add_argument("--disable-logging")  # Desabilitar loggings
+          options.add_argument("--disable-images")  # Disable images
+          options.add_argument("--disable-css")  # Disable CSS
+          service = ChromeService(log_path='NUL')
+          driver = webdriver.Chrome(options=options, service=service)
+      self._driver = driver
+      self._url_to_crawl = url_to_crawl
+      self._input_name = input_name
+      self._process_number = None
+      self._fields_target = {}
     
   def clean_text(self, text):
     text = re.sub(r'\s+', ' ', text)
@@ -126,7 +125,8 @@ class Crawler:
     except Exception as e:
       logger.debug(f"An error occurred: {e}")
     finally:
-      self._driver.quit()
+      if self._driver:
+        self._driver.quit()
 
 
 
