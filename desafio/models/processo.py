@@ -9,6 +9,8 @@ class Processo(models.Model):
   data_de_distribuicao = models.DateField()
   juiz = models.CharField(max_length=150)
   valor_da_acao = models.DecimalField(max_digits=10, decimal_places=2)
+  movimentacoes = models.TextField(default='Nenhuma ação encontrada')
+  
   
   
   class Meta:

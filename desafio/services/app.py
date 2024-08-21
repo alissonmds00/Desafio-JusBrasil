@@ -36,14 +36,16 @@ class App:
         ['juiz', 'juizProcesso', 'ID'],
         ['valor_acao', 'valorAcaoProcesso', 'ID'],
         ['partes', 'tableTodasPartes', 'ID'],
-        ['Movimentacoes', 'containerMovimentacao', 'CLASS_NAME']
+        ['movimentacoes', 'fundoEscuro containerMovimentacao', 'CLASS_NAME'],
+        ['movimentacoes_2', 'fundoClaro movimentacaoProcesso', 'CLASS_NAME']
       ],
       'tjce': [
         ['classe', 'classeProcesso', 'ID'],
         ['area', 'areaProcesso', 'ID'],
         ['assunto', 'assuntoProcesso', 'ID'],
         ['partes', 'tableTodasPartes', 'ID'],
-        ['Movimentacoes', 'tabelaUltimasMovimentacoes', 'ID']
+        ['movimentacoes', 'fundoEscuro containerMovimentacao', 'CLASS_NAME'],
+        ['movimentacoes_2', 'fundoClaro movimentacaoProcesso', 'CLASS_NAME']
       ]
     }
     for url in self._urls[tribunal]:

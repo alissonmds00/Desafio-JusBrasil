@@ -32,4 +32,12 @@ class TratamentoDados:
         return float(valor)
     except:
       return 0
+
+  @staticmethod
+  def get_first_key_non_null(data, keys, default=None):
+    for key in keys:
+        dado = data.get(key)
+        if dado:
+            return dado
+    return default
   
