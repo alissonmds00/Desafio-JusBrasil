@@ -3,7 +3,11 @@ from desafio.models.processo import Processo
 from desafio.utils.processos import NumeroProcesso
 from desafio.utils.tratamento_dados import TratamentoDados as td
 from django.db import transaction
+import logging
+from django.db import IntegrityError, transaction
+from django.core.exceptions import ValidationError
 
+logger = logging.getLogger(__name__)
 class ConsultaService:
     def verificar_processo_db(self, processo):
         numero_processo_formatado = NumeroProcesso(processo).numero
@@ -38,6 +42,15 @@ class ConsultaService:
                 movimentacoes=td.get_first_key_non_null(dado, ['movimentacoes', 'movimentacoes_2'], 'Nenhuma ação encontrada'),
                 partes=td.get_first_key_non_null(dado, ['partes', 'partes_2'], 'Nenhum envolvido encontrado')
             )
+        except IntegrityError as e:
+            transaction.set_rollback(True)
+            logger.error(f"Erro de integridade ao criar processo: {e}")
+            raise e
+        except ValidationError as e:
+            transaction.set_rollback(True)
+            logger.error(f"Erro de validação ao criar processo: {e}")
+            raise e
         except Exception as e:
             transaction.set_rollback(True)
+            logger.error(f"Erro desconhecido ao criar processo: {e}")
             raise e
