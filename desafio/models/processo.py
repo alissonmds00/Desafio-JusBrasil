@@ -10,6 +10,7 @@ class Processo(models.Model):
   juiz = models.CharField(max_length=150)
   valor_da_acao = models.DecimalField(max_digits=10, decimal_places=2)
   
+  
   class Meta:
     unique_together = ('numero_do_processo', 'grau')
   

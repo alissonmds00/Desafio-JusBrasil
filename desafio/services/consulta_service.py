@@ -33,7 +33,7 @@ class ConsultaService:
                 assunto=td.remover_aspas(dado.get('assunto', '')),
                 data_de_distribuicao=dado.get('data_de_distribuicao', '1970-01-01'),
                 juiz=td.remover_aspas(dado.get('juiz', 'Desconhecido')),
-                valor_da_acao=float(dado.get('valor_da_acao', 0))
+                valor_da_acao=td.formatar_dinheiro_float(dado.get('valor_acao', 0))
             )
         except Exception as e:
             transaction.set_rollback(True)

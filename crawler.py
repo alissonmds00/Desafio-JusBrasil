@@ -8,17 +8,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from desafio.utils.tratamento_dados import TratamentoDados as td
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 class Crawler:
   def __init__(self, url_to_crawl, input_name, logs=False, driver=None):
-    """_doc_
-    Args:
-        url_to_crawl (_string_): url to collect data
-        input_name (_string_): field element's name to insert the process number
-        logs (_bool_, optional): Logs = True, will show performance logs. Defaults to False.
-        driver (_webdriver.[DRIVER_], optional): Browser will be used to crawl. Defaults to Chrome Driver.
+    """
+    inputs:
+    url_to_crawl (str): url do site que será feito o crawling
+    input_name (str): atributo "name" do campo input onde será inserido o número do processo
+    logs (bool, opcional): se True, mostra os logs de desempenho. Padrão: falso
+    driver (webdriver.[DRIVER_], opcional): navegador que será usado para fazer o crawling. Padrão: Chrome Driver.
     """
     options = ChromeOptions()
     if driver is None:
@@ -38,18 +39,17 @@ class Crawler:
       self._process_number = None
       self._fields_target = {}
     
-  def clean_text(self, text):
-    text = re.sub(r'\s+', ' ', text)
-    return text.strip()
-    
   def set_process_number(self, process_number):
     self._process_number = process_number
 
   def set_fields_target(self, fields_target):
-    """_summary_
-
-    Args:
-        fields_target (['new_field_name', 'element_name', 'element_type']): 
+    """
+    input:
+    fields_target (list): lista de campos que serão coletados
+    
+    exemplo de uso: 
+     [['novo_nome_campo', 'nome_elemento', 'tipo_elemento'], 
+      ['novo_nome_campo', 'nome_elemento', 'tipo_elemento']]
     """
     self._fields_target = {field[0]: (field[1], field[2]) for field in fields_target}
     
@@ -69,7 +69,7 @@ class Crawler:
         elements = soup.find_all(element_name)
 
       if elements:
-        result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
+        result_text[field_name] = [td.limpar_caracteres(element.get_text()) for element in elements]
     return result_text
   
   def check_and_handle_intermediate_screen(self):
