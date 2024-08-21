@@ -26,7 +26,10 @@ class TratamentoDados:
   
   @staticmethod
   def formatar_dinheiro_float(valor):
+    try:
         valor = TratamentoDados.remover_aspas(valor)
         valor = re.sub(r'[^\d,]', '', valor).replace('.', '').replace(',', '.')
         return float(valor)
+    except:
+      return 0
   
