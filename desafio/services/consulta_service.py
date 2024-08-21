@@ -20,7 +20,6 @@ class ConsultaService:
     def salvar_processo_db(self, dados, numero_processo):
         numero_processo_formatado = NumeroProcesso(numero_processo).numero
         for grau, dado in enumerate(dados, start=1):
-            print(td.get_first_key_non_null(dado, ['movimentacoes', 'movimentacoes_2'], 'Nenhuma ação encontrada'))
             self.criar_processo(dado, numero_processo_formatado, grau)
             
 
@@ -36,7 +35,8 @@ class ConsultaService:
                 data_de_distribuicao=td.get_first_key_non_null(dado, ['data_de_distribuicao'], '1970-01-01'),
                 juiz=td.remover_aspas(td.get_first_key_non_null(dado, ['juiz'], 'Desconhecido')),
                 valor_da_acao=td.formatar_dinheiro_float(td.get_first_key_non_null(dado, ['valor_acao'], 0)),
-                movimentacoes=td.get_first_key_non_null(dado, ['movimentacoes', 'movimentacoes_2'], 'Nenhuma ação encontrada')
+                movimentacoes=td.get_first_key_non_null(dado, ['movimentacoes', 'movimentacoes_2'], 'Nenhuma ação encontrada'),
+                partes=td.get_first_key_non_null(dado, ['partes', 'partes_2'], 'Nenhum envolvido encontrado')
             )
         except Exception as e:
             transaction.set_rollback(True)

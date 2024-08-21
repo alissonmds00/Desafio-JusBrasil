@@ -35,7 +35,8 @@ class App:
         ['assunto', 'assuntoProcesso', 'ID'],
         ['juiz', 'juizProcesso', 'ID'],
         ['valor_acao', 'valorAcaoProcesso', 'ID'],
-        ['partes', 'tableTodasPartes', 'ID'],
+        ['partes', 'tablePartesPrincipais', 'ID'],
+        ['partes_2', 'tableTodasPartes', 'ID'], 
         ['movimentacoes', 'fundoEscuro containerMovimentacao', 'CLASS_NAME'],
         ['movimentacoes_2', 'fundoClaro movimentacaoProcesso', 'CLASS_NAME']
       ],
@@ -43,7 +44,8 @@ class App:
         ['classe', 'classeProcesso', 'ID'],
         ['area', 'areaProcesso', 'ID'],
         ['assunto', 'assuntoProcesso', 'ID'],
-        ['partes', 'tableTodasPartes', 'ID'],
+        ['partes', 'tablePartesPrincipais', 'ID'],
+        ['partes_2', 'tableTodasPartes', 'ID'], 
         ['movimentacoes', 'fundoEscuro containerMovimentacao', 'CLASS_NAME'],
         ['movimentacoes_2', 'fundoClaro movimentacaoProcesso', 'CLASS_NAME']
       ]
