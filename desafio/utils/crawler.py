@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from desafio.utils.tratamento_dados import TratamentoDados as td
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,10 +39,7 @@ class Crawler:
       self._process_number = None
       self._fields_target = {}
     
-  def clean_text(self, text):
-    text = re.sub(r'\s+', ' ', text)
-    return text.strip()
-    
+
   def set_process_number(self, process_number):
     self._process_number = process_number
 
@@ -69,7 +67,7 @@ class Crawler:
         elements = soup.find_all(element_name)
 
       if elements:
-        result_text[field_name] = [self.clean_text(element.get_text()) for element in elements]
+        result_text[field_name] = [td.limpar_caracteres(element.get_text()) for element in elements]
     return result_text
   
   def check_and_handle_intermediate_screen(self):
