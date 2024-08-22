@@ -7,7 +7,7 @@ A aplicação possui um crawler que faz requisições para um site o qual está 
 As configurações das requisições ocorrem em alguns arquivos como: os arquivos do diretório service: app.py (que reúne as regras de execução do crawler), e consulta_service que é responsável pelas regras de armazenamento no banco de dados.
 Ademais, no diretório utils possui as ferramentas que cuidam das funcionalidades e tratamentos de dado da aplicação, e também podem ser re-configurados caso necessário.
 
-<h1>Como executar</h1>:
+<h1>Como executar</h1>
 0- É importante a criação de um arquivo nomeado como ".env", em que os valores devem ser copiados e colados do arquivo ".env,example", embora funcione sem.
 
 1- Criação do virtual environment:
@@ -36,5 +36,9 @@ Devido à não padronização do nome dos atributos entre os sites, no primeiro 
 
 <h1>Considerações finais</h1>
 Preferi não armazenar separadamente as informações de movimentações e partes, por acreditar que o tratamento de dados a partir da requisição iria performar de uma maneira melhor através do front-end. Portanto, são retornadas em forma de array.
+
+<h2>Comandos</h2>
+Consultar o arquivo comandos.md
+
 
 

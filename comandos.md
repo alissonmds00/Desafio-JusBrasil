@@ -19,3 +19,6 @@
 
 #Obtendo as atualizações do banco de dados
 -> python manage.py migrate
+
+#Executar os testes
+-> python -m unittest desafio.tests.app_test
