@@ -20,15 +20,17 @@ class TestApp(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             app = App(numero_processo_longo)
         self.assertEqual(str(context.exception), 'O número deve ter exatamente 20 dígitos.')
-        
-    def test_numero_processo_invalido(self):
+    
+    
+    def test_numero_processo_inexistente(self):
         numero_processo = '07108025520188020009' #O último digito 9 é inválido
     
         app = App(numero_processo)
         resultado = app.iniciar_consulta()
-        
+
+        #Ele deve executar o navegador para crawling uma única vez
         self.assertIsNone(resultado) #Resultado deve ser nulo
-        
+            
 
 if __name__ == '__main__':
     unittest.main()

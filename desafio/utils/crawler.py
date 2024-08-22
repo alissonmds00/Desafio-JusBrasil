@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 class Crawler:
   def __init__(self, url_to_crawl, input_name, logs=False, driver=None):
-    """_doc_
+    """
     Args:
         url_to_crawl (_string_): url to collect data
         input_name (_string_): field element's name to insert the process number
@@ -32,6 +32,7 @@ class Crawler:
           options.add_argument("--disable-css")  # Disable CSS
           service = ChromeService(log_path='NUL')
           driver = webdriver.Chrome(options=options, service=service)
+      self._logs = logs
       self._driver = driver
       self._url_to_crawl = url_to_crawl
       self._input_name = input_name
@@ -104,23 +105,26 @@ class Crawler:
         by = getattr(By, by_str)
         try:
           if peek:
-            logger.debug(f"Waiting for element: {element_name} by {by_str}")
+            logger.debug(f"Aguardando elemento: {element_name} by {by_str}")
           WebDriverWait(self._driver, 2).until(EC.presence_of_element_located((by, element_name)))
           if peek:
-            logger.debug(f"Element {element_name} loaded.")
+            logger.debug(f"Elemento {element_name} capturado.")
         except Exception as e:
-          logger.error(f"Element {element_name} not found: {e}")
+          if self._logs:
+            logger.error(f"Elemento {element_name} not não encontrado: {e}")
+          else:
+            logger.error(f"Elemento {element_name} not não encontrado")
           continue
       if peek:
-        logger.debug("Collecting desired values...")
+        logger.debug("Coletando os elementos...")
         
       # Coletar os valores desejados
       values = self.get_values_by_selector()
       if peek:
-        logger.debug("Values collected:", values)
+        logger.debug("Valores coletados:", values)
       return values
     except Exception as e:
-      logger.debug(f"An error occurred: {e}")
+      logger.debug(f"Ocorreu um: {e}")
     finally:
       if self._driver:
         self._driver.quit()
