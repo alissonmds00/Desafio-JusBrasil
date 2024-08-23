@@ -6,12 +6,17 @@ from django.db import transaction
 import logging
 from django.db import IntegrityError, transaction
 from django.core.exceptions import ValidationError
+from desafio.serializers import ProcessoSerializer
 
 logger = logging.getLogger(__name__)
 class ConsultaService:
     def verificar_processo_db(self, processo):
         numero_processo_formatado = NumeroProcesso(processo).numero
-        return Processo.objects.filter(numero_do_processo=numero_processo_formatado)
+        processos = Processo.objects.filter(numero_do_processo=numero_processo_formatado)
+        if processos:
+            serializer = ProcessoSerializer(processos, many=True)
+            return serializer.data
+        return processos
 
     def obter_numero_processo(self, request, numero_processo):
         if numero_processo:

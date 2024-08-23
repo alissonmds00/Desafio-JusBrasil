@@ -27,8 +27,8 @@ class ConsultaView(APIView):
 
       # Consulta e verifica se o processo está no banco de dados
       processo_db = self.consulta_service.verificar_processo_db(processo)
-      if processo_db.exists():
-          return Response(list(processo_db.values()), status=status.HTTP_200_OK)
+      if processo_db:
+          return Response(processo_db, status=status.HTTP_200_OK)
 
       # Utiliza o crawler para obter os dados do processo
       resultado_crawler = self.consulta_service.obter_dados_crawler(processo)
@@ -38,4 +38,4 @@ class ConsultaView(APIView):
       # Salva os dados do processo no banco de dados
       self.consulta_service.salvar_processo_db(resultado_crawler, processo)
       processo_db = self.consulta_service.verificar_processo_db(processo)
-      return Response(list(processo_db.values()), status=status.HTTP_201_CREATED)
+      return Response(processo_db, status=status.HTTP_201_CREATED)

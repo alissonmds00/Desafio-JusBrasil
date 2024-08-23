@@ -41,3 +41,18 @@ class TratamentoDados:
             return dado
     return default
   
+  @staticmethod
+  def formatar_dados_movimentacoes(value):
+    # Remover colchetes do início e do fim da string
+    value = re.sub(r'^\[|\]$', '', value)
+    # Separar a string pelo delimitador ','
+    movimentacoes = [movimentacao.strip() for movimentacao in value.split("',")]
+    # Remover aspas do início e do final de cada parte
+    movimentacoes = [movimentacao.strip('"').strip("'") for movimentacao in movimentacoes]
+    return movimentacoes
+  
+  @staticmethod
+  def formatar_dados_partes(value):
+    value = re.sub(r'^\[|\]$', '', value)
+    value = value.strip("'").strip('"')
+    return value
